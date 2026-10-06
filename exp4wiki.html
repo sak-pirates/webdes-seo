@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - A11yWiki</title>
+    <meta name="description" content="A lightweight, strictly semantic wiki dedicated to web accessibility and SEO best practices.">
+    <meta property="og:title" content="Home - A11yWiki">
+    <meta property="og:description" content="A lightweight, strictly semantic wiki dedicated to web accessibility and SEO best practices.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://a11ywiki.local/">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        wiki: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            accent: '#2563eb'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        /* Strict high-contrast focus rings for WCAG 2.1 AA/AAA compliance */
+        a:focus-visible, button:focus-visible, input:focus-visible {
+            outline: 4px solid #f59e0b !important;
+            outline-offset: 2px !important;
+        }
+    </style>
+</head>
+
+<body class="h-full bg-wiki-50 dark:bg-wiki-900 text-wiki-800 dark:text-wiki-100 flex flex-col justify-between transition-colors duration-200" id="body-root">
+
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-6 focus:py-3 focus:bg-amber-400 focus:text-slate-900 focus:font-bold focus:rounded-lg focus:shadow-2xl">
+        Skip to main content
+    </a>
+
+    <header class="bg-white dark:bg-wiki-800 border-b border-wiki-200 dark:border-slate-700 sticky top-0 z-40" role="banner">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <a href="#" onclick="switchArticle('home'); return false;" class="flex items-center space-x-2 text-wiki-accent font-bold text-xl focus:outline-none" aria-label="A11yWiki Home">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                    </svg>
+                    <span>A11yWiki</span>
+                </a>
+                <span class="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2.5 py-1 rounded-full font-semibold hidden sm:inline-block">
+                    SEO &amp; WCAG 2.1
+                </span>
+            </div>
+
+            <nav aria-label="Article Switching" class="flex items-center space-x-2">
+                <button onclick="switchArticle('home')" id="nav-btn-home" class="px-3 py-1.5 rounded-lg text-sm font-semibold transition-all bg-wiki-accent text-white">Home</button>
+                <button onclick="switchArticle('semantic-html')" id="nav-btn-semantic-html" class="px-3 py-1.5 rounded-lg text-sm font-semibold transition-all hover:bg-wiki-100 dark:hover:bg-slate-700">Semantic HTML</button>
+                <button onclick="switchArticle('web-accessibility')" id="nav-btn-web-accessibility" class="px-3 py-1.5 rounded-lg text-sm font-semibold transition-all hover:bg-wiki-100 dark:hover:bg-slate-700">Web Accessibility</button>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content" class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <aside class="lg:col-span-3 space-y-6" aria-label="Heading Outline Sidebar">
+                <div class="bg-white dark:bg-wiki-800 rounded-xl p-4 shadow-sm border border-wiki-200 dark:border-slate-700 sticky top-24">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 px-2">Heading Outline</h2>
+                    <nav aria-label="Table of Contents">
+                        <ul id="outline-list" class="space-y-1.5 text-sm">
+                            <!-- Populated dynamically -->
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+
+            <article id="article-view" class="lg:col-span-6 bg-white dark:bg-wiki-800 rounded-2xl p-6 sm:p-10 shadow-sm border border-wiki-200 dark:border-slate-700 space-y-6">
+                <!-- Content injected dynamically -->
+            </article>
+
+            <aside class="lg:col-span-3 space-y-6" aria-label="Meta Tags Inspector">
+                <div class="bg-white dark:bg-wiki-800 rounded-xl p-5 shadow-sm border border-wiki-200 dark:border-slate-700 sticky top-24 space-y-4 text-xs">
+                    <h2 class="font-bold text-sm flex items-center space-x-2 pb-2 border-b border-wiki-200 dark:border-slate-700">
+                        <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span>Meta Tags Inspector</span>
+                    </h2>
+                    <div>
+                        <span class="font-semibold text-slate-400 block mb-1">Page Title (&lt;title&gt;):</span>
+                        <p id="meta-inspector-title" class="p-2 bg-wiki-50 dark:bg-slate-900 rounded font-mono text-slate-700 dark:text-slate-300 break-all">Loading...</p>
+                    </div>
+                    <div>
+                        <span class="font-semibold text-slate-400 block mb-1">Meta Description:</span>
+                        <p id="meta-inspector-desc" class="p-2 bg-wiki-50 dark:bg-slate-900 rounded font-mono text-slate-700 dark:text-slate-300">Loading...</p>
+                    </div>
+                    <div>
+                        <span class="font-semibold text-slate-400 block mb-1">Open Graph Title:</span>
+                        <p id="meta-inspector-og" class="p-2 bg-wiki-50 dark:bg-slate-900 rounded font-mono text-slate-700 dark:text-slate-300">Loading...</p>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+    </main>
+
+    <footer class="bg-white dark:bg-wiki-800 border-t border-wiki-200 dark:border-slate-700 py-6 mt-12" role="contentinfo">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500">
+            <p>&copy; 2026 A11yWiki. Strictly built with Semantic HTML5, ARIA Landmarks, and WCAG 2.1 compliance.</p>
+        </div>
+    </footer>
+
+    <script>
+        const articles = {
+            home: {
+                id: "home",
+                title: "Welcome to A11yWiki",
+                metaTitle: "Home - A11yWiki",
+                metaDesc: "A lightweight, strictly semantic wiki dedicated to web accessibility and SEO best practices.",
+                ogTitle: "Home - A11yWiki",
+                content: `
+                    <h1>Welcome to A11yWiki</h1>
+                    <p class="text-base text-slate-600 dark:text-slate-300 font-medium">Your pristine reference for semantic HTML, search engine optimization, and web accessibility.</p>
+                    
+                    <section aria-labelledby="core-mission">
+                        <h2 id="core-mission">Core Mission</h2>
+                        <p>A11yWiki demonstrates how clean markup without JavaScript bloat creates lightning-fast, highly inclusive web experiences that screen readers and search crawlers love.</p>
+                    </section>
+
+                    <section aria-labelledby="getting-started">
+                        <h2 id="getting-started">Getting Started</h2>
+                        <p>Use the navigation above to explore our core sample articles:</p>
+                        <ul>
+                            <li><strong>Semantic HTML:</strong> Understand element roles and structure.</li>
+                            <li><strong>Web Accessibility:</strong> Learn WCAG 2.1 POUR principles.</li>
+                        </ul>
+                    </section>
+                `
+            },
+            "semantic-html": {
+                id: "semantic-html",
+                title: "Semantic HTML5",
+                metaTitle: "Semantic HTML5 Best Practices - A11yWiki",
+                metaDesc: "Learn how semantic elements improve search engine indexing and screen reader navigation.",
+                ogTitle: "Semantic HTML5 Best Practices - A11yWiki",
+                content: `
+                    <h1>Semantic HTML5</h1>
+                    <p class="text-base text-slate-600 dark:text-slate-300 font-medium">Semantic elements clearly communicate their meaning to both browsers and assistive technologies.</p>
+                    
+                    <section aria-labelledby="why-semantic">
+                        <h2 id="why-semantic">Why Semantic Markup Matters</h2>
+                        <p>Generic containers like <code>&lt;div&gt;</code> provide no context. Semantic elements like <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>, and <code>&lt;section&gt;</code> define document structure.</p>
+                        
+                        <section aria-labelledby="seo-impact">
+                            <h3 id="seo-impact">SEO Impact</h3>
+                            <p>Search engine crawlers allocate higher relevance to properly structured heading trees (<code>&lt;h1&gt;</code> through <code>&lt;h3&gt;</code>) and semantic sections.</p>
+                        </section>
+                    </section>
+
+                    <section aria-labelledby="landmarks">
+                        <h2 id="landmarks">ARIA Landmarks</h2>
+                        <p>Combining semantic tags with ARIA landmarks guarantees effortless page navigation for screen reader users.</p>
+                    </section>
+                `
+            },
+            "web-accessibility": {
+                id: "web-accessibility",
+                title: "Web Accessibility (WCAG 2.1)",
+                metaTitle: "Web Accessibility WCAG 2.1 Guide - A11yWiki",
+                metaDesc: "Comprehensive overview of WCAG 2.1 POUR principles for inclusive web design.",
+                ogTitle: "Web Accessibility WCAG 2.1 Guide - A11yWiki",
+                content: `
+                    <h1>Web Accessibility (WCAG 2.1)</h1>
+                    <p class="text-base text-slate-600 dark:text-slate-300 font-medium">Web accessibility ensures people with disabilities can perceive, understand, navigate, and interact with the web.</p>
+                    
+                    <section aria-labelledby="pour-pillars">
+                        <h2 id="pour-pillars">The Four POUR Pillars</h2>
+                        <p>WCAG guidelines are anchored in four foundational requirements:</p>
+                        <ul>
+                            <li><strong>Perceivable:</strong> Information must be presentable in perceivable ways.</li>
+                            <li><strong>Operable:</strong> Navigation and controls must work via keyboard and voice.</li>
+                            <li><strong>Understandable:</strong> Content and UI behavior must be predictable.</li>
+                            <li><strong>Robust:</strong> Compatible across diverse assistive technologies.</li>
+                        </ul>
+                    </section>
+
+                    <section aria-labelledby="focus-states">
+                        <h2 id="focus-states">High Contrast Focus Rings</h2>
+                        <p>Visible focus states are mandatory so keyboard-only users can track their active position.</p>
+                    </section>
+                `
+            }
+        };
+
+        window.onload = function() {
+            switchArticle('home');
+        };
+
+        function switchArticle(articleId) {
+            const article = articles[articleId];
+            if (!article) return;
+
+            // Update active navigation buttons state
+            ['home', 'semantic-html', 'web-accessibility'].forEach(id => {
+                const btn = document.getElementById(`nav-btn-${id}`);
+                if (id === articleId) {
+                    btn.className = "px-3 py-1.5 rounded-lg text-sm font-semibold transition-all bg-wiki-accent text-white";
+                } else {
+                    btn.className = "px-3 py-1.5 rounded-lg text-sm font-semibold transition-all hover:bg-wiki-100 dark:hover:bg-slate-700";
+                }
+            });
+
+            // Inject article content
+            const articleContainer = document.getElementById('article-view');
+            articleContainer.innerHTML = article.content;
+
+            // Update page title and meta tags
+            document.title = article.metaTitle;
+            document.querySelector('meta[name="description"]').setAttribute('content', article.metaDesc);
+            document.querySelector('meta[property="og:title"]').setAttribute('content', article.ogTitle);
+            document.querySelector('meta[property="og:description"]').setAttribute('content', article.metaDesc);
+
+            // Update Meta Inspector sidebar
+            document.getElementById('meta-inspector-title').textContent = article.metaTitle;
+            document.getElementById('meta-inspector-desc').textContent = article.metaDesc;
+            document.getElementById('meta-inspector-og').textContent = article.ogTitle;
+
+            // Generate Heading Outline in Sidebar
+            generateOutline(articleContainer);
+        }
+
+        function generateOutline(container) {
+            const outlineList = document.getElementById('outline-list');
+            outlineList.innerHTML = "";
+
+            const headings = container.querySelectorAll('h1, h2, h3');
+            if (headings.length === 0) {
+                outlineList.innerHTML = `<li class="text-slate-400 italic px-2">No headings found</li>`;
+                return;
+            }
+
+            headings.forEach((h, index) => {
+                if (!h.id) {
+                    h.id = `heading-${index}`;
+                }
+                const li = document.createElement('li');
+                const tagName = h.tagName.toLowerCase();
+                let indent = "pl-2";
+                if (tagName === 'h3') indent = "pl-6 text-xs";
+                else if (tagName === 'h2') indent = "pl-4";
+
+                li.className = indent;
+                li.innerHTML = `
+                    <a href="#${h.id}" class="text-slate-600 dark:text-slate-300 hover:text-wiki-accent transition-all block py-0.5 truncate">
+                        ${h.textContent}
+                    </a>
+                `;
+                outlineList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
